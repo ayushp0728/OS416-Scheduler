@@ -27,8 +27,10 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ucontext.h>
 
 typedef uint worker_t;
+
 
 typedef struct TCB {
 	/* add important states in a thread control block */
@@ -40,7 +42,12 @@ typedef struct TCB {
 	// And more ...
 
 	// YOUR CODE HERE
-} tcb; 
+	int ThreadID; // use 
+	void *stack; 
+	enum ThreadStatus{RUNNING, READY, BLOCKED, SUSPENDED} CurrThreadState;
+	ucontext_t threadCtx;
+	int priority;} tcb; 
+
 
 /* mutex struct definition */
 typedef struct worker_mutex_t {
