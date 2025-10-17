@@ -46,7 +46,8 @@ typedef struct TCB {
 	void *stack; 
 	enum ThreadStatus{RUNNING, READY, BLOCKED, SUSPENDED} CurrThreadState;
 	ucontext_t threadCtx;
-	int priority;} tcb; 
+	int priority;
+} tcb; 
 
 
 /* mutex struct definition */
@@ -54,6 +55,7 @@ typedef struct worker_mutex_t {
 	/* add something here */
 
 	// YOUR CODE HERE
+	
 } worker_mutex_t;
 
 /* define your data structures here: */

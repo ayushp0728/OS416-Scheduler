@@ -1,5 +1,5 @@
 // File:	thread-worker.c
-// List all group member's name:
+// List all group member's name: Shlok Bohra, Ayush Patel
 // username of iLab:
 // iLab Server:
 
@@ -153,15 +153,15 @@ static void schedule() {
 	//YOUR CODE HERE
 
 	// - invoke scheduling algorithms according to the policy (PSJF or MLFQ or CFS)
-#if defined(PSJF)
-    	sched_psjf();
-#elif defined(MLFQ)
-	sched_mlfq();
-#elif defined(CFS)
-    	sched_cfs();  
-#else
-	# error "Define one of PSJF, MLFQ, or CFS when compiling. e.g. make SCHED=MLFQ"
-#endif
+// #if defined(PSJF)
+//     	sched_psjf();
+// #elif defined(MLFQ)
+// 	sched_mlfq();
+// #elif defined(CFS)
+//     	sched_cfs();  
+// #else
+// 	# error "Define one of PSJF, MLFQ, or CFS when compiling. e.g. make SCHED=MLFQ"
+// #endif
 }
 
 
