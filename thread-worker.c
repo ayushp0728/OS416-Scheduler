@@ -5,6 +5,7 @@
 
 #include "thread-worker.h"
 
+
 //Global counter for total context switches and 
 //average turn around and response time
 long tot_cntx_switches=0;
@@ -13,7 +14,53 @@ double avg_resp_time=0;
 
 
 // INITAILIZE ALL YOUR OTHER VARIABLES HERE
+int num_of_threads=0;
+double total_turn_time=0;
+double total_resp_time=0; 
+
 // YOUR CODE HERE
+
+
+
+typedef struct{
+	int items[100];
+    int back;
+    int front;
+} Queue;
+
+void initializeQueue(Queue* q){
+	q->front = -1;
+    q->back = 0;
+}
+bool isEmpty(Queue* q){
+	return (q->front == q->back - 1);
+}
+bool isFull(Queue* q){
+	return (q->back == 100);
+}
+void enqueue(Queue* q, int thread1){
+	if (isFull(q)) {
+		printf("MAX SIZE reached, can't enqueue\n");
+        return;
+    }
+    q->items[q->back] = thread1;
+    q->back++;
+}
+void dequeue(Queue* q, int thread1){
+	if (isEmpty(q)) {
+        printf("Nothing to dequeue\n");
+        return;
+    }
+    q->front++;
+}
+int peek(Queue* q)
+{
+    if (isEmpty(q)) {
+        printf("Queue is empty\n");
+        return -1; // return some default value or handle
+    }
+    return q->items[q->front + 1];
+}
 
 
 /* create a new thread */
@@ -106,7 +153,14 @@ static void sched_psjf() {
 	// (feel free to modify arguments and return types)
 
 	// YOUR CODE HERE
+	int time_waiting = 0
+    int turnaround_time = 0;
+	int response_time = 0; 
+
+	//shortest time quantums into queue, then parse by that. 
 	
+
+	//somewhere towards the end, divide all turnaround time and response time by number of threads. 
 }
 
 
@@ -179,4 +233,6 @@ void print_app_stats(void) {
 // Feel free to add any other functions you need
 
 // YOUR CODE HERE
+
+
 
