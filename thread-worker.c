@@ -4,6 +4,7 @@
 // iLab Server:
 
 #include "thread-worker.h"
+#define STACK_SIZE SIGSTKSZ
 
 
 //Global counter for total context switches and 
@@ -17,6 +18,8 @@ double avg_resp_time=0;
 int num_of_threads=0;
 double total_turn_time=0;
 double total_resp_time=0; 
+
+int currThreadID = 1;
 
 // YOUR CODE HERE
 
@@ -62,10 +65,36 @@ int peek(Queue* q)
     return q->items[q->front + 1];
 }
 
+void dummyFunc(void){}
 
 /* create a new thread */
 int worker_create(worker_t * thread, pthread_attr_t * attr, 
                       void *(*function)(void*), void * arg) {
+
+	(void)attr;
+		tcb *thrd = (tcb *)malloc(sizeof *thrd);
+		thrd->stack = malloc(STACK_SIZE);
+		thrd->ThreadID = currThreadId; currThreadId++;
+		thrd->priority = 0; //base priority
+		thrd->next = NULL;
+		thrd->CurrThreadState = READY;
+
+		if (getcontext(&thrd) < 0){
+		perror("getcontext");
+		free(thrd->stack);
+		free(thrd);
+		exit(1);
+	}
+
+
+	
+		thrd->threadCtx.uc_stack.ss_size = STACK_SIZE;
+		thrd->threadCtx.uc_stack.ss_sp = thrd->stack;
+		thrd->threadCtx.uc_link = NULL;
+		thrd->threadCtx.uc_stack.ss_flags = 0;
+
+		makecontext(&thrd->threadCtx, (void*)&dummyFunc,1, arg);
+		thread = thrd->ThreadID;
 
        // - create Thread Control Block (TCB)
        // - create and initialize the context of this worker thread
@@ -74,6 +103,9 @@ int worker_create(worker_t * thread, pthread_attr_t * attr,
        // - make it ready for the execution.
 
        // YOUR CODE HERE
+
+
+	
 	
     return 0;
 };
